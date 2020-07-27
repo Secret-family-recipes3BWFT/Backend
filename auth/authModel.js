@@ -1,16 +1,20 @@
 
-const db = require("../../data/dbConfig");
+const db = require("../data/dbConfig.js");
 
 module.exports = {
   add,
-  findBy
+  findBy,
+  findById
 };
 
 function findBy(filter){
-  console.log(filter,"filter");
   return db("users as u")
   .where(filter)
   .orderBy("u.id");
+}
+
+function findById(id){
+  return db("users").where({ id }).first();
 }
 
 async function add(user){
@@ -21,3 +25,4 @@ async function add(user){
     throw error;
   }
 }
+
