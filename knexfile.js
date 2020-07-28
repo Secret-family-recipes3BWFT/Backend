@@ -1,6 +1,7 @@
+
 require("dotenv").config();
 
-const pgConnection = process.env.DATABASE_URL || "postgresql://postgres:abc@localhost/recipes";
+const pgConnection = process.env.DATABASE_URL || "postgresql://postgres:abc@localhost/recipe";
 
 module.exports = {
 
@@ -21,7 +22,7 @@ module.exports = {
 testing: {
   client: "sqlite3",
   connection: {
-    filename: "./data/test.db3",
+    filename: ":memory:",
   },
   useNullAsDefault: true,
   migrations: {
@@ -41,6 +42,7 @@ production: {
   },
   migrations: {
     directory: "./data/migrations",
+    tableName: "knex_migrations"
   },
   seeds: {
     directory: "./data/seeds",

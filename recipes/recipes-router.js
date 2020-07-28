@@ -2,9 +2,9 @@ const router = require("express").Router();
 
 const Recipes = require("./recipesModel.js");
 
-const { restricted } = require("../auth/middleware/authMiddleware.js");
+const { restricted } = require("../middleware/authMiddleware.js");
 
-const {} = require("./middleware/recipeMiddleware.js")
+const {} = require("../middleware/recipeMiddleware.js")
 
 router.use(restricted);
 

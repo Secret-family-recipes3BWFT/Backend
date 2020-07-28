@@ -1,53 +1,57 @@
 
-const router = require("express").Router();
+const bcryptjs = require("bcryptjs");
 
-const Users = require("./authModel.js");
+const router = require("express").Router();
+const Auth = require("./authModel.js");
+
+const { bcrypt_rounds } = require("../data/jwtConfig.js");
 
 const { 
   validCredentials,
-  secureCredentials,
-  compareValues,
   createToken
-} = require("./middleware/authMiddleware");
-
-router.post('/register', (req, res) => {
-  const credentials = req.body;
-
-  if(validCredentials(credentials)){
-     secureCredentials(credentials)
-
-  Users.add(credentials)
-  .then(user => {
+} = require("../middleware/authMiddleware.js");
+router.post("/register", (req, res) => {
+  
+  const user = req.body;
+  const hash = bcryptjs.hashSync(user.password, bcrypt_rounds);
+  user.password = hash;
+  Auth.add(user)
+  
+  .then(saved => {
     res.status(201)
-    .json({ message: `Account created for user ${user.username}, please log in to continue`});
+    .json({ message: `User ${saved.username} successfully created`});
   })
+  
   .catch(error => {
-    res.status(500).json({ errorMessage: error.message})
-  });
-} else {
-  res.status(400).json({ message: "Please provide username and password."})
-}
-});
+    res.status(500).json({ errorMessage: error.message })
+  })
+})
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
+
   if(validCredentials(req.body)){
-    Users.findBy({ username })
+    Auth.findBy({ username })
     .then(([user]) =>{
-      if(user && compareValues(password, user.password)){
+      if(user && bcryptjs.compareSync(password, user.password)){
         const token = createToken(user);
         res.status(200)
         .json({ message: `Welcome ${user.username}`, 
                 token, user_id: user.id })
-      } else {
-        res.status(401).json({ message: "Invalid credentials"})
+  
+              } else {
+        res.status(401).json({ message: "Invalid Username ,or Password"})
       }
     })
+  
     .catch(error => {
       res.status(500).json({ errorMessage: error.message})
     })
+  
   } else {
-    res.status(400).json({ message: "Please provide valid user credentials"})
+    res.status(400).json({ message: "Please provide valid Username ,and Password"})
   }
 });
+
+
 module.exports = router;
