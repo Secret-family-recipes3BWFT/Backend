@@ -1,8 +1,8 @@
-```json
-//Secret Family Recipes API Documentation
 
-Base Url: // https://build-week-secret-recipes-api.herokuapp.com/
-```
+## Secret Family Recipes API Documentation
+
+## Base Url: // https://build-week-secret-recipes-api.herokuapp.com/
+
 ### Status Codes ###
 
   200 Successful
@@ -35,16 +35,17 @@ Base Url: // https://build-week-secret-recipes-api.herokuapp.com/
 }
 
 
+```
+
 Returns message, token, and user_id.
 
-```
 The following endpoints require a JWT => axiosWithAuth( ) 
 
-GET to _/api/recipes_
+## GET to _/api/recipes_
 
-Returns  **all recipes**
+Returns  all recipes
 
-GET to _`/api/recipes?category=${categoryName}`_
+## GET to _`/api/recipes?category=${categoryName}`_
 
 Returns all recipes with that category name
 
@@ -63,7 +64,9 @@ Returns **recipes tied to the user logged in**
 
 ### POST to /api/recipes
 
-    ///expecting json
+ expecting json
+ 
+ ``` json
 
 {
     "title": "title",
@@ -73,13 +76,13 @@ Returns **recipes tied to the user logged in**
     "category": "category"
 }
 
-
+```
 
 ### PUT to /api/recipes/:id
 
-    //id must be the recipe_id
+    id must be the recipe_id
 
-    ///expecting json
+ ``` json expecting json
 
 {
   "title": "title",
@@ -89,6 +92,7 @@ Returns **recipes tied to the user logged in**
   "category":"category"
 }
 
+```
 
 ### DELETE to /api/recipes/:id
 
