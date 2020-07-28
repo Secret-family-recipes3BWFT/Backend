@@ -1,3 +1,4 @@
+
 const cleaner = require("knex-cleaner");
 
 function cleanTables(knex) {
