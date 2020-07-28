@@ -11,12 +11,9 @@
   404 Not Found
   500 Server Error
 
-
-
 ### POST to _/api/auth/register_ ### 
 ```json
     ///expecting json
-
 
 {
   "username": "username",
@@ -34,9 +31,7 @@
   "password": "password"
 }
 
-
 ```
-
 Returns message, token, and user_id.
 
 The following endpoints require a JWT => axiosWithAuth( ) 
@@ -49,11 +44,9 @@ Returns  all recipes
 
 Returns all recipes with that category name
 
-
 ### GET /api/recipes/my-recipes
 
 Returns **recipes tied to the user logged in**
-
 
 ###  GET to _/api/recipes/:id_
 

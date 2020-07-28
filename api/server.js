@@ -12,6 +12,7 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 
+
 server.use("/api/auth", authRouter);
 server.use("/api/recipes", recipesRouter);
 

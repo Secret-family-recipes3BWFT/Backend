@@ -1,14 +1,11 @@
 const router = require("express").Router();
-
 const Recipes = require("./recipesModel.js");
-
 const { restricted } = require("../middleware/authMiddleware.js");
-
-const {} = require("../middleware/recipeMiddleware.js.js")
+const { getByCategory } = require("../middleware/recipeMiddleware.js")
 
 router.use(restricted);
 
-router.get("/", (req, res) => {
+router.get("/", getByCategory, (req, res) => {
   Recipes.getAll()
   .then(recipes => {
     res.status(200).json({ recipes });
@@ -19,20 +16,19 @@ router.get("/", (req, res) => {
 })
 
 router.get("/my-recipes", (req, res) =>{
-  const id = req.jwt.user_id;
 
-  Recipes.getAllUserRecipe(id)
+  Recipes.getAllUserRecipe(req.jwt.user_id)
   .then(recipes => {
     // console.log(recipes)
     res.status(200).json(recipes);
-
+    
   })
   .catch(error => {
     res.status(500).json({ errorMessage: error.message })
   })
 })
 
-router.get("/:id", (req, res) =>{
+router.get("/:id",(req, res) =>{
   const id = req.params.id;
 
   Recipes.getByRecipeId(id)
@@ -45,15 +41,15 @@ router.get("/:id", (req, res) =>{
 })
 
 router.post("/", (req, res) => {
-  const newRecipe = req.body;
-        req.jwt.user_id = newRecipe.user_id;
+  const newRecipe = {
+    ...req.body,
+    user_id: req.jwt.user_id
+  };
   Recipes.add(newRecipe)
   .then(([response]) => {
-    console.log(response)
     if(response) {
     Recipes.getByRecipeId(response)
      .then(response => {
-       console.log(response)
      res.status(200).json(response)
     })
     .catch(error => {
@@ -64,7 +60,7 @@ router.post("/", (req, res) => {
     }
   })
   .catch(error => {
-    res.status(500).json({ errorMessage: error.message })
+    res.status(500).json({ errorMessage: error.message, message: "ITS ME" })
   })
 })
 
@@ -75,14 +71,14 @@ router.put("/:id", (req, res) =>{
   Recipes.update(id, changes)
   .then(updatedRecipe => {
     if(updatedRecipe){
-      Recipes.getByRecipeId(updatedRecipe)
+      Recipes.getByRecipeId(id)
       .then(newRecipe =>{
         res.status(200).json(newRecipe)
       })
       .catch(error => {
         res.status(500).json({ errorMessage: error.message})
       })
-
+      
     } else {
       res.status(400).json({ message: "The recipe id provide does not exist"})
     }
@@ -103,4 +99,4 @@ router.delete("/:id", (req, res) => {
 })
 
 
-module.exports = router; 
+module.exports = router;

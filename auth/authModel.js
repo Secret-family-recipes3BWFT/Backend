@@ -8,6 +8,7 @@ module.exports = {
 };
 
 function findBy(filter){
+  // console.log(filter,"filter");
   return db("users as u")
   .where(filter)
   .orderBy("u.id");
@@ -25,4 +26,5 @@ async function add(user){
     throw error;
   }
 }
+
 
