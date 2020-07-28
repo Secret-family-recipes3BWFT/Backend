@@ -3,7 +3,7 @@
 package-lock.json
 
 # Removes database
-
+recipes.db3
 
 # Logs
 logs
