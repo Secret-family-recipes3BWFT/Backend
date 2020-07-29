@@ -26,7 +26,7 @@ describe('Server End Points', () => {
   describe('POST to /register', () => {
     it("should create an account and return 201 status code", async () =>{
       try{
-      await supertest(server).post("https://bw-secret-recipe.herokuapp.com/api/auth/register")
+      await supertest(server).post("https://build-week-secret-recipes-api.herokuapp.com/api/auth/register")
       .send(credentials)
       .then(response => {
         expect(response.status).toBe(201)
@@ -41,7 +41,7 @@ describe('Server End Points', () => {
   describe("POST to /login", () => {
     it("Should login user and return status code 200", async() =>{
       try {
-        await supertest(server).post("https://bw-secret-recipe.herokuapp.com/api/auth/login")
+        await supertest(server).post("https://build-week-secret-recipes-api.herokuapp.com/api/auth/login")
         .send(credentials)
         .then(response => {
           expect(response.status).toBe(200);

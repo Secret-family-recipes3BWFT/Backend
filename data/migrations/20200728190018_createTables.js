@@ -9,7 +9,7 @@ exports.up = function(knex) {
       .notNullable();
     })
   
-    .createTable("recipes", recipes =>{
+    .createTable("recipes", (recipes) =>{
       recipes.increments();
       recipes.integer("user_id").unsigned().references("users.id")
       recipes.string("title", 500).notNullable();
