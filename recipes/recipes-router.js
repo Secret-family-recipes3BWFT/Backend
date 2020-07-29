@@ -19,7 +19,6 @@ router.get("/my-recipes", (req, res) =>{
 
   Recipes.getAllUserRecipe(req.jwt.user_id)
   .then(recipes => {
-    // console.log(recipes)
     res.status(200).json(recipes);
     
   })
