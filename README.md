@@ -90,3 +90,15 @@ Returns **recipes tied to the user logged in**
 ### DELETE to /api/recipes/:id
 
 id must be the recipe_id
+
+
+
+## Explanation 
+
+this api was built to acompany our secreat family recipes application
+
+the depedecies were installed from npm.
+
+the endpoints are made for the app and documented above.
+a individual coould come in and manipulate the endpoints asw ell as the seeds and migrations to recive a differemt result 
+
